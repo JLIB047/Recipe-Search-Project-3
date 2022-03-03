@@ -13,7 +13,7 @@ const SignupForm = () => {
     //set state for alert
     const [showAlert, setShowAlert] = useState(false);
     //define mutation for adding user 
-    const [adduser] = useMutation(ADD_USER);
+    const [addUser] = useMutation(ADD_USER);
 
     const handleInputChange = (event) => {
         const { name, value } = event.target;
@@ -30,7 +30,7 @@ const SignupForm = () => {
         }
 
         try {
-            const { data } = await adduser({
+            const { data } = await addUser({
                 vaiables: { ...userFormData }
             });
 
