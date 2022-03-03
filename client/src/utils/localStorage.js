@@ -27,3 +27,4 @@ export const getSavedRecipeIds = () => {
     localStorage.setItem('saved_recipes', JSON.stringify(updatedSavedRecipeIds));
   
     return true;
+};
