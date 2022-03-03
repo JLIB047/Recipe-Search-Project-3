@@ -9,7 +9,6 @@ export const GET_ME = gql `
             recipeCount
             savedRecipes {
                 recipeId
-                authors
                 description
                 title
                 image
