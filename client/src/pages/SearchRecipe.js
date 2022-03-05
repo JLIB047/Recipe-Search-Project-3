@@ -35,6 +35,7 @@ const SearchRecipes = () => {
             const { items } = await response.json();
 
             const recipeData = items.map((recipe) => ({
+              //TO-DO: match recipe schema 
                 recipeId: recipe.id,
                 title: recipe.title,
                 description: recipe.description,

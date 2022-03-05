@@ -1,4 +1,5 @@
-// route to get logged in user's info (needs the token)
+// If push error, delete the file locally 
+
 export const getMe = (token) => {
     return fetch('/api/users/me', {
       headers: {
@@ -41,8 +42,8 @@ export const getMe = (token) => {
   };
   
   // remove saved recipe data for a logged in user
-  export const deleteRecipe = (recipeId, token) => {
-    return fetch(`/api/users/recipes/${recipeId}`, {
+  export const deleteRecipe = (idMeal, token) => {
+    return fetch(`/api/users/recipes/${idMeal}`, {
       method: 'DELETE',
       headers: {
         authorization: `Bearer ${token}`,
@@ -52,5 +53,5 @@ export const getMe = (token) => {
   
   // make a search to recipe api
   export const searchRecipe = (query) => {
-    return fetch(`https://www.themealdb.com/api.php`);
+    return fetch(`www.themealdb.com/api/json/v1/1/search.php?s=${query}`);
   };
