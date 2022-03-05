@@ -51,3 +51,6 @@ export const getMe = (token) => {
   };
   
   // make a search to recipe api
+  export const searchRecipe = (query) => {
+    return fetch(`https://www.themealdb.com/api.php`);
+  };

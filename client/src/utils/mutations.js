@@ -10,7 +10,7 @@ export const LOGIN_USER = gql `
                 email
                 recipeCount
                 savedRecipe {
-                    recipeId
+                    IdMeal
                     title
                     description
                     image
@@ -31,7 +31,7 @@ export const ADD_USER = gql `
                 email
                 recipeCount
                 savedRecipe {
-                    recipeId
+                    IdMeal
                     title
                     description
                     image
@@ -50,10 +50,11 @@ export const SAVE_RECIPE = gql `
             recipeCount 
             savedRecipe {
                 description 
-                recipeId
+                IdMeal
                 image
+                category
                 link 
-                title
+                strMeal
             }
         }
     }
@@ -67,10 +68,11 @@ export const REMOVE_RECIPE = gql `
             recipeCount
             saveRecipe {
                 description 
-                recipeId
+                IdMeal
                 image
+                category
                 link 
-                title
+                strMeal
             }
         }
     }

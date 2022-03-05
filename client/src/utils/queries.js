@@ -8,9 +8,9 @@ export const GET_ME = gql `
             email
             recipeCount
             savedRecipes {
-                recipeId
+                IdMeal
                 description
-                title
+                strMeal
                 image
                 link
             }
