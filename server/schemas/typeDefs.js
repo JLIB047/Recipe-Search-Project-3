@@ -20,7 +20,7 @@ type User {
     savedRecipes: [Recipe]
 }
 type Query {
-    me: user
+    me: User
 }
 type Auth {
     token: ID!
