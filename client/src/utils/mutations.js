@@ -10,11 +10,11 @@ export const LOGIN_USER = gql `
                 email
                 recipeCount
                 savedRecipe {
-                    IdMeal
-                    title
-                    description
+                    idMeal
+                    strMeal
+                    strInstructions
                     image
-                    link
+                    strYoutube
                 }
             }
         }
@@ -31,11 +31,11 @@ export const ADD_USER = gql `
                 email
                 recipeCount
                 savedRecipe {
-                    IdMeal
-                    title
-                    description
+                    idMeal
+                    strMeal
+                    strInstructions
                     image
-                    link
+                    strYoutube
                 }
             }
         }
@@ -49,30 +49,31 @@ export const SAVE_RECIPE = gql `
             email
             recipeCount 
             savedRecipe {
-                description 
-                IdMeal
-                image
-                category
-                link 
+                idMeal
                 strMeal
+                strInstructions
+                image
+                strYoutube
+                strCategory
             }
         }
     }
 `;
 
+// idMeal was recipeId 
 export const REMOVE_RECIPE = gql `
-    mutation removeRecipe($RecipeId: String!) {
-        removeRecipe(recipeId: $RecipeId) {
+    mutation removeRecipe($idMeal: String!) {
+        removeRecipe(idMeal: $idMeal) {
             username
             email
             recipeCount
             saveRecipe {
-                description 
-                IdMeal
-                image
-                category
-                link 
+                idMeal
                 strMeal
+                strInstructions
+                image
+                strYoutube
+                strCategory
             }
         }
     }

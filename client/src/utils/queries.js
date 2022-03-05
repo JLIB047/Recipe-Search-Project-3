@@ -8,11 +8,11 @@ export const GET_ME = gql `
             email
             recipeCount
             savedRecipes {
-                IdMeal
-                description
+                idMeal
                 strMeal
+                strInstructions
                 image
-                link
+                strYoutube
             }
         }
     }
