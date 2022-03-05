@@ -7,6 +7,7 @@ import { REMOVE_RECIPE } from '../utils/mutations'
 //import Auth from '../utils/auth';
 import { removeRecipeId } from '../utils/localStorage';
 
+// TO-DO: update recipe Schema 
 const SavedRecipes = () => {
     const { loading, data } = useQuery(GET_ME);
     const [deleteRecipe] = useMutation(REMOVE_RECIPE);
