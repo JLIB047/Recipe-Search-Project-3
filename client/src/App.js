@@ -2,7 +2,7 @@ import { ApolloProvider, ApolloClient, InMemoryCache, createHttpLink } from '@ap
 import React from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import {setContext} from '@apollo/client/link/context';
-import SearchRecipe from './pages/searchRecipe';
+import SearchRecipe from './pages/SearchRecipe';
 import SavedRecipe from './pages/SavedRecipe';
 import NavBar from './components/NavBar';
 import './App.css';
