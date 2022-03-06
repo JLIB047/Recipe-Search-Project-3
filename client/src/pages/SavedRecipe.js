@@ -4,7 +4,7 @@ import { Jumbotron, Container, CardColumns, Card, Button } from 'react-bootstrap
 import { useQuery, useMutation } from '@apollo/react-hooks'; 
 import { GET_ME } from '../utils/queries';
 import { REMOVE_RECIPE } from '../utils/mutations'
-//import Auth from '../utils/auth';
+import Auth from '../utils/auth';
 import { removeRecipeId } from '../utils/localStorage';
 
 // TO-DO: update recipe Schema 
