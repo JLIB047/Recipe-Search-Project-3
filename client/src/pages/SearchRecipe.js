@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Jumbotron, Container, Col, Form, Button, Card, CardColumns } from 'react-bootstrap';
-
+//import { searchRecipe } from '../utils/API'
 import Auth from '../utils/auth';
-//import { searchGoogleBooks } from '../utils/API';
 import { saveRecipeIds, getSavedRecipeIds } from '../utils/localStorage';
 import { useMutation } from '@apollo/react-hooks';
 import {SAVE_RECIPE} from '../utils/mutations';
@@ -26,31 +25,33 @@ const SearchRecipes = () => {
         }
 
         try {
-            const response = await searchAPI(searchInput);
-
+            const response = await fetch(`https://www.themealdb.com/api/json/v1/1/search.php?s=${searchInput}`);
+             
             if(!response.ok) {
                 throw new Error('something went wrong!');
             }
+           console.log(searchInput);
 
-            const { items } = await response.json();
-
-            const recipeData = items.map((recipe) => ({
+            const { meals } = await response.json();
+              console.log({meals});
+            const recipeData = meals.map((recipe) => ({
               //TO-DO: match recipe schema 
-                recipeId: recipe.id,
-                title: recipe.title,
-                description: recipe.description,
-                image: recipe.imageLinks?.thumbnail || '',
+                idMeal: recipe.id,
+                strMeal: recipe.strMeal,
+                strInstructions: recipe.strInstructions,
+                //image: recipe.imageLinks?.thumbnail || '',
             }));
 
             setSearchedRecipes(recipeData);
             setSearchInput('');
         } catch(err){
             console.error(err);
+            console.log(err);
         }
     };
 
-    const handleSaveRecipe = async (recipeId) => {
-        const recipeToSave = searchedRecipes.find((recipe) => recipe.recipeId === recipeId);
+    const handleSaveRecipe = async (idMeal) => {
+        const recipeToSave = searchedRecipes.find((recipe) => recipe.idMeal === idMeal);
 
         const token = Auth.loggedIn() ? Auth.getToken() : null;
 
@@ -66,7 +67,7 @@ const SearchRecipes = () => {
                     cache.writeQuery({ query: GET_ME , data: {me: {...me, savedRecipe: [...me.savedRecipes, recipeToSave] } } })
                 }
             });
-            setSavedRecipeIds([...savedRecipeIds, recipeToSave.recipeId]);
+            setSavedRecipeIds([...savedRecipeIds, recipeToSave.idMeal]);
         } catch(err) {
             console.log(err);
         }
@@ -108,20 +109,20 @@ const SearchRecipes = () => {
         <CardColumns>
           {searchedRecipes.map((recipe) => {
             return (
-              <Card key={recipe.recipeId} border='dark'>
-                {recipe.image ? (
-                  <Card.Img src={recipe.image} alt={`The cover for ${recipe.title}`} variant='top' />
-                ) : null}
+              <Card key={recipe.idMeal} border='dark'>
+                {/* {recipe.image ? (
+                  <Card.Img src={recipe.image} alt={`The cover for ${recipe.strMeal}`} variant='top' />
+                ) : null} */}
                 <Card.Body>
-                  <Card.Title>{recipe.title}</Card.Title>
-                  <p className='small'>Authors: {recipe.authors}</p>
-                  <Card.Text>{recipe.description}</Card.Text>
+                  <Card.Title>{recipe.strMeal}</Card.Title>
+                  
+                  <Card.Text>{recipe.strInstructions}</Card.Text>
                   {Auth.loggedIn() && (
                     <Button
-                      disabled={savedRecipeIds?.some((savedRecipeId) => savedRecipeId === recipe.recipeId)}
+                      disabled={savedRecipeIds?.some((savedRecipeId) => savedRecipeId === recipe.idMeal)}
                       className='btn-block btn-info'
-                      onClick={() => handleSaveRecipe(recipe.recipeId)}>
-                      {savedRecipeIds?.some((savedRecipeId) => savedRecipeId === recipe.recipeId)
+                      onClick={() => handleSaveRecipe(recipe.idMeal)}>
+                      {savedRecipeIds?.some((savedRecipeId) => savedRecipeId === recipe.idMeal)
                         ? 'This recipe has already been saved!'
                         : 'Save this Recipe!'}
                     </Button>

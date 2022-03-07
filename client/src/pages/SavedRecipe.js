@@ -4,7 +4,7 @@ import { Jumbotron, Container, CardColumns, Card, Button } from 'react-bootstrap
 import { useQuery, useMutation } from '@apollo/react-hooks'; 
 import { GET_ME } from '../utils/queries';
 import { REMOVE_RECIPE } from '../utils/mutations'
-//import Auth from '../utils/auth';
+import Auth from '../utils/auth';
 import { removeRecipeId } from '../utils/localStorage';
 
 // TO-DO: update recipe Schema 
@@ -12,7 +12,7 @@ const SavedRecipes = () => {
     const { loading, data } = useQuery(GET_ME);
     const [deleteRecipe] = useMutation(REMOVE_RECIPE);
     const userData = data?.me || {};
-
+    
     if(!userData?.username){
         return (
             <h4>
@@ -21,7 +21,7 @@ const SavedRecipes = () => {
         );
     }
 
-    const handleDeleteRecipe = async (recipeId) => {
+    const handleDeleteRecipe = async (idMeal) => {
         const token = Auth.loggedIn() ? Auth.getToken() : null;
 
         if(!token) {
@@ -30,18 +30,18 @@ const SavedRecipes = () => {
 
     try{ 
         await deleteRecipe({
-            variables: {recipeId: recipeId},
+            variables: {idMeal: idMeal},
             update: cache => {
                 const data = cache.readQuery({ query: GET_ME });
                 const userDataCache = data.me;
                 const savedRecipeCache = userDataCache.savedRecipe;
-                const updatedRecipeCache = savedRecipeCache.filter((recipe) => recipe.recipeId !== recipeId);
+                const updatedRecipeCache = savedRecipeCache.filter((recipe) => recipe.idMeal !== idMeal);
                 data.me.savedRecipe = updatedRecipeCache;
                 cache.writeQuery({ query: GET_ME, data: {data: {...data.me.savedRecipe}}})
             }
         });
 
-        removeRecipeId(recipeId);
+        removeRecipeId(idMeal);
     } catch(err) {
         console.log(err);
     }
@@ -67,15 +67,14 @@ const SavedRecipes = () => {
                   : 'You have no saved recipes!'}
               </h2>
               <CardColumns>
-                {userData.savedRecipe.map((book) => {
+                {userData.savedRecipe.map((recipe) => {
                   return (
-                    <Card key={recipe.recipeId} border='dark'>
+                    <Card key={recipe.idMeal} border='dark'>
                       {recipe.image ? <Card.Img src={recipe.image} alt={`The cover for ${recipe.title}`} variant='top' /> : null}
                       <Card.Body>
                         <Card.Title>{recipe.title}</Card.Title>
-                        <p className='small'>Authors: {book.authors}</p>
                         <Card.Text>{recipe.description}</Card.Text>
-                        <Button className='btn-block btn-danger' onClick={() => handleDeleteRecipe(recipe.recipeId)}>
+                        <Button className='btn-block btn-danger' onClick={() => handleDeleteRecipe(recipe.idMeal)}>
                           Delete this Recipe!
                         </Button>
                       </Card.Body>
