@@ -1,7 +1,7 @@
 // resolvers.js file
 
-const { User } = require('../models');
-const { AuthenticationError } = require('apollo-server-express');
+const {User}= require('../models');
+const { AuthenticationError } = require('apollo-server-errors');
 const { signToken } = require('../utils/auth');
 
 const resolvers = {
@@ -22,18 +22,21 @@ const resolvers = {
 
             return { token, user };
         },
-        login: async (parent, { email, password }) => {
-            const user = await User.findOne({ email });
-            if (!user) {
-                throw new AuthenticationError('Invalid credentials')
-            }
-            const correctPW = await User.isCorrectPassword(password);
-            if (!correctPW) {
-                throw new AuthenticationError('Invalid credentials')
-            }
-            const token = signToken(user);
-            return { token, user }
-        },
+
+       login:async(parent ,{email,password})=>{
+
+      const user =await User.findOne({email});
+
+      if (!user){throw new AuthenticationError('Incorrect credentials')}
+
+      const correctPw = await user.isCorrectPassword(password);
+
+      if(!correctPw){ throw new AuthenticationError('Incorrect credentials') }
+       const token = signToken(user);
+      return  {user,token};
+    },
+
+
         saveRecipe: async (parent, { recipe }, context) => {
             if (context.user) {
                 const updatedUser = await User.findOneAndUpdate(
