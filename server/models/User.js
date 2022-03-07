@@ -1,4 +1,4 @@
-const { Schema, model } = require('mongoose');
+const {Schema, model} =require('mongoose');
 const bcrypt = require('bcrypt');
 
 // import  recipe schema
@@ -52,3 +52,4 @@ userSchema.methods.isCorrectPassword = async function (password) {
 const User = model('User', userSchema);
 
 module.exports = User;
+
