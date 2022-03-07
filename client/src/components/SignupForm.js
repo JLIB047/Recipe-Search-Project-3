@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Form, Button, Alert } from 'react-bootstrap';
 
-//import Auth from '../utile/auth';
+import Auth  from '../utils/auth';
 import { useMutation } from '@apollo/react-hooks';
 import { ADD_USER } from '../utils/mutations';
 
@@ -28,13 +28,13 @@ const SignupForm = () => {
             event.preventDefault();
             event.stopPropagation();
         }
-
+console.log(userFormData);
         try {
             const { data } = await addUser({
                 vaiables: { ...userFormData }
             });
 
-            //Auth.login(data.addUser.token);
+            Auth.login(data.addUser.token);
         } catch(err) {
             console.error(err);
             setShowAlert(true);
@@ -48,11 +48,7 @@ const SignupForm = () => {
     };
 
     return (
-        <Form noValidate validate={validated} onSubmit={handleFormSubmit}>
-            <Alert dismissable onClose={() => setShowAlert(false)} show={showAlert} variant='danger'>
-                There's something wrong with your signup!
-            </Alert>
-
+        <Form noValidate validated={validated} onSubmit={handleFormSubmit}>
             <Form.Group>
                 <Form.Label htmlFor='username'>Username</Form.Label>
                 <Form.Control
@@ -97,6 +93,9 @@ const SignupForm = () => {
                 variant='success'>
                     Submit
                 </Button>
+            <Alert dismissable onClose={() => setShowAlert(false)} show={showAlert} variant='danger'>
+                There's something wrong with your signup!
+            </Alert>    
         </Form>
     );
 };
