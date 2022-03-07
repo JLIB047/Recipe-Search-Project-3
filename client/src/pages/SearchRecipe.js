@@ -30,11 +30,11 @@ const SearchRecipes = () => {
             if(!response.ok) {
                 throw new Error('something went wrong!');
             }
-           
+           console.log(searchInput);
 
-            const { items } = await response.json();
-              console.log({items});
-            const recipeData = items.map((recipe) => ({
+            const { meals } = await response.json();
+              console.log({meals});
+            const recipeData = meals.map((recipe) => ({
               //TO-DO: match recipe schema 
                 idMeal: recipe.id,
                 strMeal: recipe.strMeal,
