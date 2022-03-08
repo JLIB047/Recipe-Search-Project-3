@@ -6,3 +6,11 @@
     text-decoration: dashed;
 }
 
+.title {
+    color: black;
+    background-color: aqua;
+}
+
+h1 {
+    color: black;
+}

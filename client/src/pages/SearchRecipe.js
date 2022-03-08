@@ -59,6 +59,20 @@ const SearchRecipe = () => {
     //         return false;
     //     }
 
+    //     try {
+    //         await saveRecipe({
+    //             variables: {recipe: recipeToSave},
+    //             update: cache => {
+    //                 const {me} = cache.readQuery({ query: GET_ME });
+    //                 cache.writeQuery({ query: GET_ME , data: {me: {...me, savedRecipe: [...me.savedRecipes, recipeToSave] } } })
+    //             }
+    //         });
+    //         setSavedRecipeIds([...savedRecipeIds, recipeToSave.idMeal]);
+    //     } catch(err) {
+    //         console.log(err);
+    //     }
+    const handleSaveRecipe = async (idMeal) => {
+      // find the recipe in `searchedRecipes` state by the matching id
       const recipeToSave = searchedRecipes.find((recipe) => recipe.idMeal === idMeal);
        console.log("recipe to Save",recipeToSave);
       // get token
@@ -88,7 +102,7 @@ const SearchRecipe = () => {
         <>
       <Jumbotron fluid className='text-light bg-dark'>
         <Container>
-          <h1>Search for recipes!</h1>
+          <h1 className='title'>Recipes Galore!!</h1>
           <Form onSubmit={handleFormSubmit}>
             <Form.Row>
               <Col xs={12} md={8}>
@@ -96,6 +110,7 @@ const SearchRecipe = () => {
                   name='searchInput'
                   value={searchInput}
                   onChange={(e) => setSearchInput(e.target.value)}
+                  type='text'
                   size='lg'
                   placeholder='Search for a Recipe'
                 />
@@ -146,6 +161,6 @@ const SearchRecipe = () => {
     </>
   );
     
-
+};
 
 export default SearchRecipe;
