@@ -6,13 +6,11 @@ export const GET_ME = gql `
             _id
             username
             email
-            recipeCount
             savedRecipes {
                 idMeal
                 strMeal
                 strInstructions
-                image
-                strYoutube
+                
             }
         }
     }
