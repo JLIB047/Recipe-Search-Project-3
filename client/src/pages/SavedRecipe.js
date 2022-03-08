@@ -34,10 +34,10 @@ const SavedRecipes = () => {
             update: cache => {
                 const data = cache.readQuery({ query: GET_ME });
                 const userDataCache = data.me;
-                const savedRecipeCache = userDataCache.savedRecipe;
+                const savedRecipeCache = userDataCache.savedRecipes;
                 const updatedRecipeCache = savedRecipeCache.filter((recipe) => recipe.idMeal !== idMeal);
-                data.me.savedRecipe = updatedRecipeCache;
-                cache.writeQuery({ query: GET_ME, data: {data: {...data.me.savedRecipe}}})
+                data.me.savedRecipes = updatedRecipeCache;
+                cache.writeQuery({ query: GET_ME, data: {data: {...data.me.savedRecipes}}})
             }
         });
 
@@ -63,11 +63,11 @@ const SavedRecipes = () => {
             <Container>
               <h2>
                 {userData.savedRecipes.length
-                  ? `Viewing ${userData.savedRecipe.length} saved ${userData.savedRecipe.length === 1 ? 'recipe' : 'recipes'}:`
+                  ? `Viewing ${userData.savedRecipes.length} saved ${userData.savedRecipes.length === 1 ? 'recipe' : 'recipes'}:`
                   : 'You have no saved recipes!'}
               </h2>
               <CardColumns>
-                {userData.savedRecipe.map((recipe) => {
+                {userData.savedRecipes.map((recipe) => {
                   return (
                     <Card key={recipe.idMeal} border='dark'>
                       {recipe.image ? <Card.Img src={recipe.image} alt={`The cover for ${recipe.title}`} variant='top' /> : null}

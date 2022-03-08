@@ -1,0 +1,8 @@
+@import "./App.js";
+
+.searchBtn {
+    background-color: goldenrod;
+    color: black;
+    text-decoration: dashed;
+}
+

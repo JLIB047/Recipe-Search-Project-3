@@ -1,4 +1,4 @@
-import gql from 'graphql-tag';
+import { gql } from '@apollo/client';
 
 export const LOGIN_USER = gql `
     mutation login ($email: String!, $password: String!) {
@@ -7,15 +7,6 @@ export const LOGIN_USER = gql `
             user {
                 _id 
                 username
-                email
-                recipeCount
-                savedRecipe {
-                    idMeal
-                    strMeal
-                    strInstructions
-                    image
-                    strYoutube
-                }
             }
         }
     }
@@ -28,15 +19,7 @@ export const ADD_USER = gql `
             user {
                 _id
                 username
-                email
-                recipeCount
-                savedRecipe {
-                    idMeal
-                    strMeal
-                    strInstructions
-                    image
-                    strYoutube
-                }
+                
             }
         }
     }
@@ -45,17 +28,12 @@ export const ADD_USER = gql `
 export const SAVE_RECIPE = gql `
     mutation saveRecipe($recipe: SavedRecipeInput!){
         saveRecipe(recipe: $recipe){
-            username
-            email
-            recipeCount 
-            savedRecipe {
                 idMeal
                 strMeal
                 strInstructions
                 image
                 strYoutube
                 strCategory
-            }
         }
     }
 `;

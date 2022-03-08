@@ -11,7 +11,7 @@ const SearchRecipes = () => {
     const [searchedRecipes, setSearchedRecipes] = useState([]);
     const [searchInput, setSearchInput] = useState('');
     const [savedRecipeIds, setSavedRecipeIds] = useState(getSavedRecipeIds());
-    const [saveRecipe] = useMutation(SAVE_RECIPE);
+    const [saveRecipes] = useMutation(SAVE_RECIPE);
 
     useEffect(() => {
         return () => saveRecipeIds(savedRecipeIds);
@@ -60,11 +60,11 @@ const SearchRecipes = () => {
         }
 
         try {
-            await saveRecipe({
+            await saveRecipes({
                 variables: {recipe: recipeToSave},
                 update: cache => {
                     const {me} = cache.readQuery({ query: GET_ME });
-                    cache.writeQuery({ query: GET_ME , data: {me: {...me, savedRecipe: [...me.savedRecipes, recipeToSave] } } })
+                    cache.writeQuery({ query: GET_ME , data: {me: {...me, savedRecipes: [...me.savedRecipes, recipeToSave] } } })
                 }
             });
             setSavedRecipeIds([...savedRecipeIds, recipeToSave.idMeal]);
