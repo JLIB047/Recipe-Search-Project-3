@@ -5,9 +5,9 @@ import Auth from '../utils/auth';
 import { saveRecipeIds, getSavedRecipeIds } from '../utils/localStorage';
 import { useMutation } from '@apollo/react-hooks';
 import {SAVE_RECIPE} from '../utils/mutations';
-import {GET_ME} from '../utils/queries';
+//import {GET_ME} from '../utils/queries';
 
-const SearchRecipes = () => {
+const SearchRecipe = () => {
     const [searchedRecipes, setSearchedRecipes] = useState([]);
     const [searchInput, setSearchInput] = useState('');
     const [savedRecipeIds, setSavedRecipeIds] = useState(getSavedRecipeIds());
@@ -36,7 +36,7 @@ const SearchRecipes = () => {
               console.log({meals});
             const recipeData = meals.map((recipe) => ({
               //TO-DO: match recipe schema 
-                idMeal: recipe.id,
+                idMeal: recipe.idMeal,
                 strMeal: recipe.strMeal,
                 strInstructions: recipe.strInstructions,
                 //image: recipe.imageLinks?.thumbnail || '',
@@ -50,27 +50,52 @@ const SearchRecipes = () => {
         }
     };
 
+    // const handleSaveRecipe = async (idMeal) => {
+    //     const recipeToSave = searchedRecipes.find((recipe) => recipe.idMeal === idMeal);
+
+    //     const token = Auth.loggedIn() ? Auth.getToken() : null;
+
+    //     if(!token){
+    //         return false;
+    //     }
+
+    //     try {
+    //         await saveRecipe({
+    //             variables: {recipe: recipeToSave},
+    //             update: cache => {
+    //                 const {me} = cache.readQuery({ query: GET_ME });
+    //                 cache.writeQuery({ query: GET_ME , data: {me: {...me, savedRecipe: [...me.savedRecipes, recipeToSave] } } })
+    //             }
+    //         });
+    //         setSavedRecipeIds([...savedRecipeIds, recipeToSave.idMeal]);
+    //     } catch(err) {
+    //         console.log(err);
+    //     }
     const handleSaveRecipe = async (idMeal) => {
-        const recipeToSave = searchedRecipes.find((recipe) => recipe.idMeal === idMeal);
-
-        const token = Auth.loggedIn() ? Auth.getToken() : null;
-
-        if(!token){
-            return false;
-        }
-
-        try {
-            await saveRecipe({
-                variables: {recipe: recipeToSave},
-                update: cache => {
-                    const {me} = cache.readQuery({ query: GET_ME });
-                    cache.writeQuery({ query: GET_ME , data: {me: {...me, savedRecipe: [...me.savedRecipes, recipeToSave] } } })
-                }
-            });
-            setSavedRecipeIds([...savedRecipeIds, recipeToSave.idMeal]);
-        } catch(err) {
-            console.log(err);
-        }
+      // find the recipe in `searchedRecipes` state by the matching id
+      const recipeToSave = searchedRecipes.find((recipe) => recipe.idMeal === idMeal);
+       console.log("recipe to Save",recipeToSave);
+      // get token
+  
+      
+      const token = Auth.loggedIn() ? Auth.getToken() : null;
+  
+      if (!token) {
+        return false;
+      }
+      console.log('token pass');
+      try {
+        const { data } = await saveRecipe({
+          variables: { input:recipeToSave },
+        });
+        console.log({data});
+        console.log(savedRecipeIds,data,"Saved recipes");
+        // if recipe successfully saves to user's account, save book id to state
+        setSavedRecipeIds([...savedRecipeIds, recipeToSave.idMeal]);
+        
+      } catch (err) {
+        console.error(err);
+      }
     };
 
     return (
@@ -138,4 +163,4 @@ const SearchRecipes = () => {
     
 };
 
-export default SearchRecipes;
+export default SearchRecipe;

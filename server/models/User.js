@@ -22,7 +22,7 @@ const userSchema = new Schema(
       required: true,
     },
    
-    savedRecipe: [recipeSchema],
+    savedRecipes: [recipeSchema],
   },
   
   {

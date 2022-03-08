@@ -7,10 +7,8 @@ type Recipe {
     _id: ID
     strInstructions: String
     idMeal: String
-    image: String
     strMeal: String
-    strCategory: String
-    strYoutube: String
+   
 }
 type User {
     _id: ID
@@ -26,18 +24,16 @@ type Auth {
     token: ID!
     user: User
 }
-input SavedRecipeInput {
+input savedRecipe {
     strInstructions: String
     idMeal: String
-    image: String
-    strYoutube: String
     strMeal: String
 }
 type Mutation {
     login(email: String!, password: String!): Auth
     addUser(username: String!, email: String!, password: String!): Auth
-    saveRecipe(recipe: SavedRecipeInput): User
-    removeRecipe(recipeId: String!): User
+    saveRecipe(input: savedRecipe!): User
+    removeRecipe(idMeal: ID!): User
 }
 `;
 

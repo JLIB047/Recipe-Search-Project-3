@@ -13,12 +13,12 @@ const recipeSchema = new Schema({
     required:true
    },
 
-   strYoutube:{
-    type: String
-   },
-   strCategory:{
-     type:String
-   },
+  //  strYoutube:{
+  //   type: String
+  //  },
+  //  strCategory:{
+  //    type:String
+  //  },
    strInstructions:{
      type:String,
      required:true

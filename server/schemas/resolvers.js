@@ -37,28 +37,49 @@ const resolvers = {
     },
 
 
-        saveRecipe: async (parent, { recipe }, context) => {
+        // saveRecipe: async (parent, { recipeData }, context) => {
+        //     console.log("SavedRecipe",recipeData)
+        //     if (context.user) {
+        //         const updatedUser = await User.findOneAndUpdate(
+        //             { _id: context.user._id },
+        //             { $addToSet: { savedRecipes: recipeData } },
+        //             { new: true }
+        //         )
+        //         return updatedUser;
+        //     }
+        //     throw new AuthenticationError('You need to be logged in first!')
+        // },
+        saveRecipe: async (parent, args, context) => {
             if (context.user) {
-                const updatedUser = await User.findOneAndUpdate(
-                    { _id: context.user._id },
-                    { $addToSet: { savedRecipes: recipe } },
-                    { new: true }
-                )
-                return updatedUser;
+            //   const savedBook = await Book.create({ ...args, username: context.user.username });
+          
+             const updatedUser =  await User.findByIdAndUpdate(
+                { _id: context.user._id },
+                { $addToSet: { savedRecipes: args.input } },
+                { new: true }
+              );
+          
+            return updatedUser;
             }
-            throw new AuthenticationError('You need to be logged in first!')
+          
+            throw new AuthenticationError('You need to be logged in!');
         },
-        removeRecipe: async (parent, { recipeId }, context) => {
-            if (context.user) {
-                const updatedUser = await User.findOneAndUpdate(
-                    { _id: context.user._id },
-                    { $pull: { savedRecipes: { recipeId: idMeal } } },
-                    { new: true }
-                )
-                return updatedUser;
+
+
+        removeRecipe: async (parent, args, context) => {
+            if(context.user) {
+            const updatedUser = await User.findOneAndUpdate(
+                { _id: context.user._id },
+                { $pull: { savedRecipes: { idMeal: args.idMeal } } },
+                { new: true }
+            );
+
+            return updatedUser;
             }
-            throw new AuthenticationError('You need to be logged in first!')
+
+            throw new AuthenticationError('You need to be logged in!');
         }
+    
     }
 };
 
