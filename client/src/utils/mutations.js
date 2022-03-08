@@ -26,7 +26,7 @@ export const ADD_USER = gql `
 `;
 
 export const SAVE_RECIPE = gql `
-    mutation saveRecipe($input:SavedRecipe!){
+    mutation saveRecipe($input:savedRecipe!){
         saveRecipe( input:$input){
             username
             email 

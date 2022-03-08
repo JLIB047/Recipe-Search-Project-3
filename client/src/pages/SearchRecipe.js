@@ -86,7 +86,7 @@ const SearchRecipe = () => {
       console.log('token pass');
       try {
         const { data } = await saveRecipe({
-          variables: { input:recipeToSave },
+          variables: { input :recipeToSave },
         });
         console.log({data});
         console.log(savedRecipeIds,data,"Saved recipes");

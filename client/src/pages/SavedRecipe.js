@@ -137,7 +137,7 @@ console.log(userData);
   if (loading) {
     return <h2>LOADING...</h2>;
   }
-  console.log(userData.savedRecipes);//undefined
+  console.log(userData.savedRecipes);
   return (
     <>
       <Jumbotron fluid className='text-light bg-dark'>
