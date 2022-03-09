@@ -37,7 +37,7 @@ function savePost (post, cb) {
   }, (Math.random() * 7000) >>> 0)
 }
 
-app.listen(3000)
+// app.listen(`http://localhost:${PORT}`)
 
 server.applyMiddleware({ app });
 
