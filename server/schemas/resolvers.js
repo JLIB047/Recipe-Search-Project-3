@@ -37,21 +37,9 @@ const resolvers = {
     },
 
 
-        // saveRecipe: async (parent, { recipeData }, context) => {
-        //     console.log("SavedRecipe",recipeData)
-        //     if (context.user) {
-        //         const updatedUser = await User.findOneAndUpdate(
-        //             { _id: context.user._id },
-        //             { $addToSet: { savedRecipes: recipeData } },
-        //             { new: true }
-        //         )
-        //         return updatedUser;
-        //     }
-        //     throw new AuthenticationError('You need to be logged in first!')
-        // },
         saveRecipe: async (parent, args, context) => {
             if (context.user) {
-            //   const savedBook = await Book.create({ ...args, username: context.user.username });
+           
           
              const updatedUser =  await User.findByIdAndUpdate(
                 { _id: context.user._id },
