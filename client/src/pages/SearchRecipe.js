@@ -49,28 +49,7 @@ const SearchRecipe = () => {
             console.log(err);
         }
     };
-
-    // const handleSaveRecipe = async (idMeal) => {
-    //     const recipeToSave = searchedRecipes.find((recipe) => recipe.idMeal === idMeal);
-
-    //     const token = Auth.loggedIn() ? Auth.getToken() : null;
-
-    //     if(!token){
-    //         return false;
-    //     }
-
-    //     try {
-    //         await saveRecipe({
-    //             variables: {recipe: recipeToSave},
-    //             update: cache => {
-    //                 const {me} = cache.readQuery({ query: GET_ME });
-    //                 cache.writeQuery({ query: GET_ME , data: {me: {...me, savedRecipe: [...me.savedRecipes, recipeToSave] } } })
-    //             }
-    //         });
-    //         setSavedRecipeIds([...savedRecipeIds, recipeToSave.idMeal]);
-    //     } catch(err) {
-    //         console.log(err);
-    //     }
+    
     const handleSaveRecipe = async (idMeal) => {
       // find the recipe in `searchedRecipes` state by the matching id
       const recipeToSave = searchedRecipes.find((recipe) => recipe.idMeal === idMeal);
@@ -100,7 +79,7 @@ const SearchRecipe = () => {
 
     return (
         <>
-      <Jumbotron fluid className='text-light bg-dark'>
+      <Jumbotron fluid className='text-light bg-info'>
         <Container>
           <h1>Search for recipes!</h1>
           <Form onSubmit={handleFormSubmit}>
